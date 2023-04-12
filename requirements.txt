@@ -28,7 +28,6 @@ certifi==2022.12.7
 cffi==1.14.4
 chardet==4.0.0
 charset-normalizer==2.0.12
-chatGPT==0.6.3
 click==8.1.3
 cloudpickle==2.2.1
 colorama==0.4.4
