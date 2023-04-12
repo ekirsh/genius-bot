@@ -138,6 +138,9 @@ def get_top_songs(artist_name, driver):
 # Initialize the Chrome driver
 uc.TARGET_VERSION = 111
 chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('load-extension=' + extension1)
 chrome_options.add_argument('load-extension=' + extension2)
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')
