@@ -32,6 +32,9 @@ def artist_data():
         scraper_thread.start()
         return jsonify({'message': 'Scraping artist...'})
 
+@app.route('/')
+def index():
+    return 'Hello World'
 
 def on_snapshot(doc_snapshot, changes, read_time):
     print('Received snapshot: {}'.format(doc_snapshot))
