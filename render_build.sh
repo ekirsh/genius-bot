@@ -17,4 +17,4 @@ else
 fi
 
 # add your own build commands...
-pip install -r requirments.txt
+pip install -r requirements.txt
