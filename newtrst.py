@@ -133,7 +133,7 @@ def get_top_songs(artist_name, driver):
 
 
 # Initialize the Chrome driver
-uc.TARGET_VERSION = 111
+
 chrome_options = Options()
 #chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
