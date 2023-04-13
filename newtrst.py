@@ -136,9 +136,10 @@ def get_top_songs(artist_name, driver):
 
 chrome_options = Options()
 #chrome_options.add_argument("--headless")
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-driver = uc.Chrome(options=chrome_options, browser_executable_path='/usr/bin/google-chrome')
+driver = uc.Chrome(options=chrome_options, executable_path=os.environ.get("CHROMEDRIVER_PATH"))
 #driver.set_page_load_timeout(10)
 driver.set_page_load_timeout(10)
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
