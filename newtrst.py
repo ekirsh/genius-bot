@@ -33,14 +33,11 @@ total_list = []
 data = []
 
 
-extension1 = '/Users/ezra/Desktop/5.4.1_0'
-extension2 = '/Users/ezra/Desktop/3.16.2_0'
-
 
 def check_exists_if_view_more(id_num, element):
     try:
         driver.find_element(By.XPATH, id_num)
-    except NoSuchElementException:
+    except (NoSuchElementException, TimeoutException):
         return False
     return True
 
@@ -78,7 +75,7 @@ def get_top_songs(artist_name, driver):
             """, element)
     # Get the links to the artist's top 10 songs
     image_url = driver.find_element(By.XPATH, profile_img_path).value_of_css_property("background-image").lstrip('url("').rstrip('")')
-    instagram_url = driver.find_element(By.XPATH, '//*[contains(@class, "square_button--instagram")]').get_attribute('href')
+    instagram_url = driver.find_elements(By.XPATH, '//*[contains(@class, "square_button--instagram")]').get_attribute('href')
     top_songs_links = []
     top_song_dict = []
     for link in grid_songs[:5]:
@@ -131,24 +128,17 @@ def get_top_songs(artist_name, driver):
                         collaborators.add(xx)
                         total_list.append(xx)
                 break
-    data.append({'name': artist_name, 'songs': top_song_dict, 'collaborators': collaborators, 'description': 'Empty for now. Come back soon for more', 'image_url': image_url, 'instagram_url': instagram_url})
-    return {'name': artist_name, 'songs': top_song_dict, 'collaborators': collaborators, 'description': 'Empty for now. Come back soon for more', 'image_url': image_url, 'instagram_url': instagram_url}
+    data.append({'name': artist_name, 'songs': top_song_dict, 'collaborators': collaborators, 'description': 'Empty for now. Come back soon for more', 'image_url': image_url, 'instagram_url': instagram_url[0]})
+    return {'name': artist_name, 'songs': top_song_dict, 'collaborators': collaborators, 'description': 'Empty for now. Come back soon for more', 'image_url': image_url, 'instagram_url': instagram_url[0]}
 
 
 # Initialize the Chrome driver
 uc.TARGET_VERSION = 111
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+#chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument('load-extension=' + extension1)
-chrome_options.add_argument('load-extension=' + extension2)
-chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-chrome_options.add_argument('--blink-settings=imagesEnabled=false')
-chrome_options.add_experimental_option(
-    "prefs", {"profile.managed_default_content_settings.images": 2}
-)
-driver = uc.Chrome(chrome_options=chrome_options)
+driver = uc.Chrome(options=chrome_options)
 #driver.set_page_load_timeout(10)
 driver.set_page_load_timeout(10)
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -169,20 +159,26 @@ url = f"https://genius.com/search?q={artist}"
 
 tree = {}
 
+
 try:
     driver.get(url)
 except TimeoutException as e:
-    driver.refresh()
+    print("Critical Error 12")
     time.sleep(2)
+    driver.refresh()
+
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'mini_card')))
 
 try:
     artist_link = driver.find_element(By.CLASS_NAME,'mini_card').get_attribute("href")
     artist_title = driver.find_element(By.CLASS_NAME,'mini_card').find_element(By.XPATH,'//*[contains(@class, "mini_card-title")]').text.strip()
     driver.get(artist_link)
 except:
+    print("Critical Error 11")
     time.sleep(2)
     driver.refresh()
 
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,'//*[contains(@class, "mini_card_grid-song")]')))
 
 top_songs = driver.find_elements(By.XPATH,'//*[contains(@class, "mini_card_grid-song")]')
 song_data = []
@@ -190,10 +186,11 @@ for song in top_songs[:7]:
     try:
         title = song.find_element(By.XPATH,'//*[contains(@class, "mini_card-title")]').text.strip()
         link = song.find_element(By.CLASS_NAME,'mini_card').get_attribute("href")
+        song_data.append({"title": title, "link": link})
     except:
         print("Critical Error")
         driver.refresh()
-    song_data.append({"title": title, "link": link})
+
 
 # Get the collaborators for each song
 songwriters = set()
