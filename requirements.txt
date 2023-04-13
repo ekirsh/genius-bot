@@ -11,3 +11,4 @@ google-cloud-firestore==2.11.0
 google-cloud-storage==1.42.3
 firebase==4.0.1
 firebase-admin==6.1.0
+webdriver-manager==3.5.3
