@@ -88,7 +88,6 @@ google-resumable-media==2.4.1
 googleapis-common-protos==1.59.0
 greenlet==2.0.1
 grpcio==1.51.3
-grpcio-status==1.51.3
 gunicorn==20.1.0
 h11==0.14.0
 h5py==3.8.0
@@ -220,7 +219,6 @@ sqlitedict==2.1.0
 sqlparse==0.4.3
 srsly==2.4.6
 st-annotated-text==3.0.0
-streamlit==1.20.0
 streamlit-tailwind==0.1.0
 streamlit-webrtc==0.45.0
 sympy==1.11.1
