@@ -4,7 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium_stealth import stealth
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import csv
 import os
@@ -135,11 +137,11 @@ def get_top_songs(artist_name, driver):
 # Initialize the Chrome driver
 
 chrome_options = Options()
+ser = Service(ChromeDriverManager().install())
 #chrome_options.add_argument("--headless")
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-driver = uc.Chrome(options=chrome_options, executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+driver = uc.Chrome(options=chrome_options, service=ser)
 #driver.set_page_load_timeout(10)
 driver.set_page_load_timeout(10)
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
