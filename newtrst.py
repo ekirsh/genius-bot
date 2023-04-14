@@ -137,7 +137,7 @@ def get_top_songs(artist_name, driver):
 # Initialize the Chrome driver
 
 chrome_options = Options()
-ser = Service(ChromeDriverManager().install())
+#ser = Service(ChromeDriverManager().install())
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
@@ -145,7 +145,7 @@ chrome_options.add_argument("--dns-prefetch-disable")
 chrome_options.add_argument("--disable-gpu")
 print(os.environ.get("PATH"))
 chrome_options.binary_location = os.environ.get("CHROME_PATH")
-driver = webdriver.Chrome(options=chrome_options, service=ser)
+driver = uc.Chrome(options=chrome_options) #, service=ser)
 print("Driver Initialized")
 #driver.set_page_load_timeout(10)
 driver.set_page_load_timeout(15)
