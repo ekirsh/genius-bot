@@ -16,5 +16,7 @@ else
   echo "...Using Chrome from cache"
 fi
 
+export CHROME_PATH="$STORAGE_DIR/chrome/opt/google/chrome/google-chrome"
+
 # add your own build commands...
 pip install -r requirements.txt
