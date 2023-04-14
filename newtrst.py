@@ -143,9 +143,9 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--dns-prefetch-disable")
 chrome_options.add_argument("--disable-gpu")
-print(os.environ.get("PATH"))
-chrome_options.binary_location = os.environ.get("CHROME_PATH")
-driver = uc.Chrome(options=chrome_options, service=ser)
+print(os.environ.get("CHROME_PATH"))
+#chrome_options.binary_location = os.environ.get("CHROME_PATH")
+driver = uc.Chrome(options=chrome_options) #, service=ser)
 print("Driver Initialized")
 #driver.set_page_load_timeout(10)
 driver.set_page_load_timeout(10)
@@ -157,7 +157,7 @@ artist_ref = db.collection('artists').document(artist)
 
 url = f"https://genius.com/search?q={artist}"
 print(url)
-
+print(driver)
 tree = {}
 
 
