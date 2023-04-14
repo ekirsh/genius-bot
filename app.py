@@ -26,6 +26,8 @@ def artist_data():
     doc = doc_ref.get()
     collab_ref = doc_ref.collection('collaborators')
     if doc.exists:
+        print('Artist found in database, returning data...')
+        print(doc.to_dict())
         return jsonify(doc.to_dict())
     else:
         print('Artist not found in database, scraping...')
