@@ -21,7 +21,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 
-cred = credentials.Certificate('genius-bceae-firebase-adminsdk-tdjny-47c45b790b.json')
+cred = credentials.Certificate('genius-bot-b8355-firebase-adminsdk-bookx-2d49ab4b27.json')
 firebase_admin.initialize_app(cred)
 
 # Initialize Firestore client

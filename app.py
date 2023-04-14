@@ -7,7 +7,7 @@ import subprocess
 import threading
 from flask_cors import CORS
 
-cred = credentials.Certificate('genius-bceae-firebase-adminsdk-tdjny-47c45b790b.json')
+cred = credentials.Certificate('genius-bot-b8355-firebase-adminsdk-bookx-2d49ab4b27.json')
 firebase_admin.initialize_app(cred)
 
 # Initialize Firestore client
