@@ -22,6 +22,7 @@ def artist_data():
     print('Received artist data request')
     data = request.get_json()
     artist_name = data.get('artistName')
+    print('Artist name: {}'.format(artist_name))
     doc_ref = db.collection('artists').document(artist_name)
     doc = doc_ref.get()
     collab_ref = doc_ref.collection('collaborators')
