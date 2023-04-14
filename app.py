@@ -32,9 +32,8 @@ def artist_data():
         return jsonify(doc.to_dict())
     else:
         print('Artist not found in database, scraping...')
-        #scraper_thread = threading.Thread(target=run_scraper, args=(artist_name,))
-        #scraper_thread.start()
-        run_scraper(artist_name)
+        scraper_thread = threading.Thread(target=run_scraper, args=(artist_name,))
+        scraper_thread.start()
         return jsonify({'message': 'Scraping artist...'})
 
 @app.route('/')
