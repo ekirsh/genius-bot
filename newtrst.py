@@ -141,22 +141,16 @@ ser = Service(ChromeDriverManager().install())
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--dns-prefetch-disable")
+chrome_options.add_argument("--disable-gpu")
 print(os.environ.get("PATH"))
 chrome_options.binary_location = os.environ.get("CHROME_PATH")
 driver = webdriver.Chrome(options=chrome_options, service=ser)
 print("Driver Initialized")
 #driver.set_page_load_timeout(10)
-driver.set_page_load_timeout(10)
+driver.set_page_load_timeout(15)
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
-stealth(driver,
-        languages=["en-US", "en"],
-        vendor="Google Inc.",
-        platform="Win32",
-        webgl_vendor="Intel Inc.",
-        renderer="Intel Iris OpenGL Engine",
-        fix_hairline=True,
-        )
 
 artist = sys.argv[1]
 artist_ref = db.collection('artists').document(artist)
@@ -173,7 +167,12 @@ except TimeoutException as e:
     time.sleep(2)
     driver.refresh()
 
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'mini_card')))
+try:
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME,'mini_card')))
+except:
+    print("Critical Error 13")
+    time.sleep(2)
+    driver.refresh()
 
 try:
     artist_link = driver.find_element(By.CLASS_NAME,'mini_card').get_attribute("href")
@@ -184,7 +183,13 @@ except:
     time.sleep(2)
     driver.refresh()
 
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,'//*[contains(@class, "mini_card_grid-song")]')))
+try:
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH,'//*[contains(@class, "mini_card_grid-song")]')))
+except:
+    print("Critical Error 14")
+    time.sleep(2)
+    driver.refresh()
+
 
 top_songs = driver.find_elements(By.XPATH,'//*[contains(@class, "mini_card_grid-song")]')
 song_data = []
