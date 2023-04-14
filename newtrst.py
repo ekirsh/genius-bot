@@ -143,8 +143,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--dns-prefetch-disable")
 chrome_options.add_argument("--disable-gpu")
-prefs = {"profile.managed_default_content_settings.images":2}
-chrome_options.add_experimental_option("prefs", prefs)
 print(os.environ.get("PATH"))
 chrome_options.binary_location = os.environ.get("CHROME_PATH")
 driver = uc.Chrome(options=chrome_options, service=ser)
